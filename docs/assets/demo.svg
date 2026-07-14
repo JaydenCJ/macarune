@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="440" viewBox="0 0 760 440" font-family="Menlo, Consolas, monospace" font-size="14">
+  <rect width="760" height="440" rx="10" fill="#101418"/>
+  <circle cx="24" cy="22" r="6" fill="#ff5f56"/>
+  <circle cx="44" cy="22" r="6" fill="#ffbd2e"/>
+  <circle cx="64" cy="22" r="6" fill="#27c93f"/>
+  <text x="380" y="27" fill="#8b949e" text-anchor="middle" font-size="12">macarune — narrow a token for a sub-agent, offline</text>
+  <g fill="#c9d1d9">
+    <text x="24" y="62"><tspan fill="#7ee787">$</tspan> macarune mint --keyring keys.json --kid root --id orc-7 \</text>
+    <text x="24" y="82">    --caveat <tspan fill="#a5d6ff">"aud = toolhost"</tspan></text>
+    <text x="24" y="104" fill="#8b949e">mrn1.eyJ2IjoxLCJraWQiOiJyb290IiwiaWQiOiJvcmMtNyIsImNhdiI6WyJhdWQgPSB0…</text>
+    <text x="24" y="136"><tspan fill="#7ee787">$</tspan> macarune attenuate --caveat <tspan fill="#a5d6ff">"tool in read_file,list_dir"</tspan> \</text>
+    <text x="24" y="156">    --caveat <tspan fill="#a5d6ff">"arg.path ^= /workspace/"</tspan> --caveat <tspan fill="#a5d6ff">"time &lt; …T12:00:00Z"</tspan></text>
+    <text x="24" y="178" fill="#8b949e"># no key needed — HMAC chaining makes narrowing offline</text>
+    <text x="24" y="210"><tspan fill="#7ee787">$</tspan> macarune verify --tool read_file --arg path=/workspace/notes.md …</text>
+    <text x="24" y="232"><tspan fill="#7ee787">allow</tspan>  kid=root id=orc-7  4 caveat(s) hold</text>
+    <text x="24" y="264"><tspan fill="#7ee787">$</tspan> macarune verify --tool shell --arg path=/etc/passwd …</text>
+    <text x="24" y="286"><tspan fill="#f778ba">deny</tspan>  kid=root id=orc-7  2 failure(s)</text>
+    <text x="24" y="308">  [1] tool in read_file,list_dir — tool is <tspan fill="#ffa657">"shell"</tspan>, not in {read_file, list_dir}</text>
+    <text x="24" y="330">  [2] arg.path ^= /workspace/ — arg.path is <tspan fill="#ffa657">"/etc/passwd"</tspan>, missing prefix</text>
+    <text x="24" y="368" fill="#d2a8ff">offline · pure HMAC-SHA256 · fail-closed · exit codes 0/1</text>
+    <text x="24" y="396" fill="#8b949e">every denial ships the exact caveat and reason — ready for audit logs</text>
+  </g>
+</svg>
